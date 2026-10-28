@@ -1,0 +1,46 @@
+; Traffic Control System - 8051
+; P1.0-P1.2 : North-South (Red, Yellow, Green)
+; P1.3-P1.5 : East-West   (Red, Yellow, Green)
+
+        ORG 0000H
+
+MAIN:
+        ; Phase 1: NS Green, EW Red
+        MOV P1, #00101001B      ; EW Green? no -> NS Green(P1.2)=1, EW Red(P1.3)=1
+        MOV R7, #10             ; green time (x 0.5 s)
+        ACALL WAIT
+
+        ; Phase 2: NS Yellow, EW Red
+        MOV P1, #00001010B      ; NS Yellow(P1.1), EW Red(P1.3)
+        MOV R7, #4              ; yellow time
+        ACALL WAIT
+
+        ; Phase 3: NS Red, EW Green
+        MOV P1, #00100001B      ; NS Red(P1.0), EW Green(P1.5)
+        MOV R7, #10
+        ACALL WAIT
+
+        ; Phase 4: NS Red, EW Yellow
+        MOV P1, #00010001B      ; NS Red(P1.0), EW Yellow(P1.4)
+        MOV R7, #4
+        ACALL WAIT
+
+        SJMP MAIN
+
+; Wait R7 x 0.5 seconds (assumes 11.0592 MHz crystal)
+WAIT:
+        ACALL DELAY_500MS
+        DJNZ R7, WAIT
+        RET
+
+; 500 ms delay using nested loops
+DELAY_500MS:
+        MOV R6, #5
+D1:     MOV R5, #200
+D2:     MOV R4, #230
+D3:     DJNZ R4, D3
+        DJNZ R5, D2
+        DJNZ R6, D1
+        RET
+
+        END

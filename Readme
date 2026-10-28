@@ -1,0 +1,28 @@
+# Traffic Control System (Assembly Language)
+
+A four-way traffic light controller written in assembly language for the
+8051 microcontroller. It cycles through green, yellow, and red phases for two
+roads (North-South and East-West) with timed delays, so that conflicting
+directions never get green at the same time.
+
+## Features
+- Two-road intersection (North-South and East-West)
+- Green, yellow, and red phases with fixed timing
+- Safe sequencing: one road is always red while the other is green or yellow
+- Delay routines built on hardware Timer 0
+- [Optional: pedestrian button, 7-segment countdown]
+
+## Hardware / Simulator
+- 8051 microcontroller (AT89C51)
+- 6 LEDs (red, yellow, green for each road) on Port 1
+- Simulated in [Keil uVision / EdSim51 / Proteus]
+
+## Pin Map (Port 1)
+| Pin  | Signal            |
+|------|-------------------|
+| P1.0 | NS Red            |
+| P1.1 | NS Yellow         |
+| P1.2 | NS Green          |
+| P1.3 | EW Red            |
+| P1.4 | EW Yellow         |
+| P1.5 | EW Green          |
